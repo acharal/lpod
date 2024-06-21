@@ -37,7 +37,7 @@ normalize_rules([R|Rs], NormalizedRules) :-
 	normalize_rules(Rs, NRs),
 	append(NR, NRs, NormalizedRules).
 
-normalize_rule(Rule, [Rule]) :- fact(Rule).
+normalize_rule(Rule, [Rule]) :- fact(Rule), !.
 normalize_rule((:- Body),    [(:- Body)]).
 normalize_rule((Head:-Body), [(Head1 :- Body1) | Aux ]) :-
 	gensym('r', R), 
@@ -68,7 +68,7 @@ conj((_ , _)).
 disj((_ ; _)).
 odisj((_ x _)).
 neg((not _)).
-lit(L) :- atom(L).
+lit(L) :- atom(L), !.
 lit(L) :- compound(L), functor(L, F, _), F \= ';', F \= ','.
 
 disj_rule(Head :- _) :- disj(Head).
@@ -162,14 +162,9 @@ append_to_rule((H :- B), L, (H :- B1)):-
 	append(Bs0, L, Bs),
 	binop(',', Bs, B1).
 
-
-% unused
-neg_list(X,Y) :- mapop(not, X, Y). 
-
 body_to_posneg([], [], []).
 body_to_posneg([L|Ls], Pos, [L|Neg]) :- neg(L), !, body_to_posneg(Ls, Pos, Neg).
 body_to_posneg([L|Ls], [L|Pos], Neg) :- body_to_posneg(Ls, Pos, Neg).
-
 
 % read LPODS
 
