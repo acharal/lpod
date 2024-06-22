@@ -43,11 +43,20 @@
               clingo = psuper.pythonPackages.callPackage ./nix/clingo.nix {};
             };
           };
+          lparse = super.callPackage ./nix/lparse.nix {};
+          psmodels = super.callPackage ./nix/psmodels.nix {};
+          lpod2asprin = self.pythonPackages.callPackage ./nix/lpod2asprin.nix {};
         };
       in
       {
 
         overlays.default = overlay;
+
+        packages = { 
+          lparse = pkgs.lparse;
+          psmodels = pkgs.psmodels;
+          lpod2asprin = pkgs.lpod2asprin;
+        };
 
         devShell = with pkgs; pkgs.devshell.mkShell {
           packages = [

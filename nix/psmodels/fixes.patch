@@ -1,0 +1,364 @@
+diff -crB psmodels/Makefile psmodels-mod/Makefile
+*** psmodels/Makefile	Tue Jun 18 20:15:30 2002
+--- psmodels-mod/Makefile	Thu May  2 08:12:04 2024
+***************
+*** 1,4 ****
+! CXX = g++
+  CXXFLAGS = -g -W -Wall 
+  LFLAGS = -g 
+  SRCS = main.cc smodels.cc stack.cc dcl.cc atomrule.cc read.cc \
+--- 1,4 ----
+! # CXX = g++
+  CXXFLAGS = -g -W -Wall 
+  LFLAGS = -g 
+  SRCS = main.cc smodels.cc stack.cc dcl.cc atomrule.cc read.cc \
+diff -crB psmodels/atomrule.cc psmodels-mod/atomrule.cc
+*** psmodels/atomrule.cc	Tue Jun 18 20:14:21 2002
+--- psmodels-mod/atomrule.cc	Thu May  2 08:12:29 2024
+***************
+*** 15,21 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+  #include <limits.h>
+  #ifdef USEDOUBLE
+  #include <math.h>
+--- 15,21 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+  #include <limits.h>
+  #ifdef USEDOUBLE
+  #include <math.h>
+diff -crB psmodels/atomrule.h psmodels-mod/atomrule.h
+*** psmodels/atomrule.h	Tue Jun 18 20:15:48 2002
+--- psmodels-mod/atomrule.h	Thu May  2 08:15:57 2024
+***************
+*** 19,27 ****
+  #define ATOMRULE_H
+  
+  /*** TSS 29.5.01 ***/
+! #include <iostream.h>
+  /*** TSS 29.5.01 ***/
+  
+  
+  #include "defines.h"
+  
+--- 19,28 ----
+  #define ATOMRULE_H
+  
+  /*** TSS 29.5.01 ***/
+! #include <iostream>
+  /*** TSS 29.5.01 ***/
+  
++ using namespace std;
+  
+  #include "defines.h"
+  
+diff -crB psmodels/dcl.cc psmodels-mod/dcl.cc
+*** psmodels/dcl.cc	Tue Jun 18 20:14:21 2002
+--- psmodels-mod/dcl.cc	Thu May  2 08:12:31 2024
+***************
+*** 15,21 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+  #include "atomrule.h"
+  #include "stack.h"
+  #include "smodels.h"
+--- 15,21 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+  #include "atomrule.h"
+  #include "stack.h"
+  #include "smodels.h"
+diff -crB psmodels/denant.cc psmodels-mod/denant.cc
+*** psmodels/denant.cc	Tue Jun 18 20:14:22 2002
+--- psmodels-mod/denant.cc	Thu May  2 08:12:35 2024
+***************
+*** 15,21 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+  #include <limits.h>
+  #include "atomrule.h"
+  #include "stack.h"
+--- 15,21 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+  #include <limits.h>
+  #include "atomrule.h"
+  #include "stack.h"
+diff -crB psmodels/improve.cc psmodels-mod/improve.cc
+*** psmodels/improve.cc	Tue Jun 18 20:14:21 2002
+--- psmodels-mod/improve.cc	Thu May  2 08:12:41 2024
+***************
+*** 15,21 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+  #include <limits.h>
+  #include "atomrule.h"
+  #include "stack.h"
+--- 15,21 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+  #include <limits.h>
+  #include "atomrule.h"
+  #include "stack.h"
+diff -crB psmodels/main.cc psmodels-mod/main.cc
+*** psmodels/main.cc	Tue Jun 18 20:28:05 2002
+--- psmodels-mod/main.cc	Thu May  2 08:14:55 2024
+***************
+*** 3,15 ****
+  #include "api.h"
+  #include "read.h"
+  #include "atomrule.h"
+! #include <fstream.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <ctype.h>
+! #include <vector.h>
+  #include <list>
+! #include <strstream.h>
+  
+  typedef vector<bool> Model;
+  
+--- 3,15 ----
+  #include "api.h"
+  #include "read.h"
+  #include "atomrule.h"
+! #include <fstream>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <ctype.h>
+! #include <vector>
+  #include <list>
+! #include <strstream>
+  
+  typedef vector<bool> Model;
+  
+diff -crB psmodels/program.cc psmodels-mod/program.cc
+*** psmodels/program.cc	Tue Jun 18 20:14:21 2002
+--- psmodels-mod/program.cc	Thu May  2 08:12:55 2024
+***************
+*** 15,21 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+  #include "program.h"
+  #include "atomrule.h"
+  
+--- 15,21 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+  #include "program.h"
+  #include "atomrule.h"
+  
+diff -crB psmodels/program.h psmodels-mod/program.h
+*** psmodels/program.h	Tue Jun 18 20:16:01 2002
+--- psmodels-mod/program.h	Thu May  2 08:13:58 2024
+***************
+*** 24,29 ****
+--- 24,30 ----
+  /*** TSS 4.1.2001 ***/
+  #include <iostream>
+  /*** TSS 4.1.2001 ***/
++ using namespace std;
+  
+  class OptimizeRule;
+  
+diff -crB psmodels/read.cc psmodels-mod/read.cc
+*** psmodels/read.cc	Tue Jun 18 20:14:21 2002
+--- psmodels-mod/read.cc	Thu May  2 08:13:04 2024
+***************
+*** 15,21 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+  #include <float.h>
+  #include <limits.h>
+  #include <string.h>
+--- 15,21 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+  #include <float.h>
+  #include <limits.h>
+  #include <string.h>
+diff -crB psmodels/smodels.cc psmodels-mod/smodels.cc
+*** psmodels/smodels.cc	Tue Jun 18 20:14:21 2002
+--- psmodels-mod/smodels.cc	Thu May  2 08:21:30 2024
+***************
+*** 15,22 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+! #include <iomanip.h>
+  #include <unistd.h>
+  #include <limits.h>
+  #include <float.h>
+--- 15,22 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+! #include <iomanip>
+  #include <unistd.h>
+  #include <limits.h>
+  #include <float.h>
+***************
+*** 72,78 ****
+  }
+  
+  /*** TSS 2.1.2001 ***/
+! const size_t BUFSIZ = 4096;
+  
+  long
+  Smodels::remaining_searchspace()
+--- 72,78 ----
+  }
+  
+  /*** TSS 2.1.2001 ***/
+! const size_t BUFSIZZ = 4096;
+  
+  long
+  Smodels::remaining_searchspace()
+***************
+*** 106,112 ****
+  void
+  Smodels::read_continuation()
+  {
+!   char buf[BUFSIZ];
+    char *p;
+    long a;
+    bool forced = false;
+--- 106,112 ----
+  void
+  Smodels::read_continuation()
+  {
+!   char buf[BUFSIZZ];
+    char *p;
+    long a;
+    bool forced = false;
+***************
+*** 118,124 ****
+    status_restored = false;
+    status_data = new continuation_data[program.number_of_atoms];
+  
+!   while (cin.getline(buf, BUFSIZ)) {
+      forced = false;
+      backtracked = false;
+      guess = false;
+--- 118,124 ----
+    status_restored = false;
+    status_data = new continuation_data[program.number_of_atoms];
+  
+!   while (cin.getline(buf, BUFSIZZ)) {
+      forced = false;
+      backtracked = false;
+      guess = false;
+diff -crB psmodels/stable.cc psmodels-mod/stable.cc
+*** psmodels/stable.cc	Tue Jun 18 20:14:22 2002
+--- psmodels-mod/stable.cc	Thu May  2 08:22:32 2024
+***************
+*** 15,22 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+! #include <iomanip.h>
+  #include <stdlib.h>
+  #if defined _BSD_SOURCE || defined _SVID_SOURCE
+  #include <sys/time.h>
+--- 15,22 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+! #include <iomanip>
+  #include <stdlib.h>
+  #if defined _BSD_SOURCE || defined _SVID_SOURCE
+  #include <sys/time.h>
+diff -crB psmodels/timer.cc psmodels-mod/timer.cc
+*** psmodels/timer.cc	Tue Jun 18 20:14:21 2002
+--- psmodels-mod/timer.cc	Thu May  2 08:21:55 2024
+***************
+*** 15,22 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <strstream.h>
+! #include <iomanip.h>
+  #include <limits.h>
+  #include "timer.h"
+  
+--- 15,22 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <strstream>
+! #include <iomanip>
+  #include <limits.h>
+  #include "timer.h"
+  
+diff -crB psmodels/timer.h psmodels-mod/timer.h
+*** psmodels/timer.h	Tue Jun 18 20:17:10 2002
+--- psmodels-mod/timer.h	Thu May  2 08:22:20 2024
+***************
+*** 21,28 ****
+  #include <time.h>
+  
+  /*** TSS ***/
+! #include <fstream.h>
+  /*** TSS ***/
+  
+  class Timer
+  {
+--- 21,29 ----
+  #include <time.h>
+  
+  /*** TSS ***/
+! #include <fstream>
+  /*** TSS ***/
++ using namespace std;
+  
+  class Timer
+  {
+diff -crB psmodels/tree.cc psmodels-mod/tree.cc
+*** psmodels/tree.cc	Tue Jun 18 20:14:22 2002
+--- psmodels-mod/tree.cc	Thu May  2 08:13:28 2024
+***************
+*** 15,21 ****
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream.h>
+  #include "atomrule.h"
+  #include "tree.h"
+  
+--- 15,21 ----
+  // MA 02111-1307, USA.
+  //
+  // Patrik.Simons@hut.fi
+! #include <iostream>
+  #include "atomrule.h"
+  #include "tree.h"
+  

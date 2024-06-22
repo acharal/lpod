@@ -1,0 +1,17 @@
+--- ./configure	2010-03-08 10:48:02.000000000 +0200
++++ ./configure	2024-06-22 15:01:01.813067492 +0300
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/usr/bin/env perl
+ #
+ # To compile lparse we need to check two things:
+ #   - Whether the system has -dl library, and
+@@ -34,7 +34,7 @@
+ # The first step is to create a temporary file name using the method
+ # from PerlFAQ.
+ use IO::File;
+-use POSIX qw(tmpnam);
++use File::Temp qw/ :POSIX /;
+ my $name;
+ do {
+   $name = tmpnam();
