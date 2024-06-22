@@ -1,0 +1,7 @@
+w * -w.
+s3 * s2.
+
+false :- w, s3.
+false :- -w, s2.
+
+-false.

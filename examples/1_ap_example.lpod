@@ -1,0 +1,2 @@
+a*b :- not c.
+b*c :- not d.
