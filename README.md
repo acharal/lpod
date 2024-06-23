@@ -43,4 +43,10 @@ s.
 
 In this example, `p` is preferred over `q` when `r` is true.
 
+## Related projects
+
+1. [psmodels](http://www.tcs.hut.fi/Software/smodels/priority/)
+2. [lpod.pl](https://www.dc.fi.udc.es/~cabalar/lpod/)
+3. [lpod2asprin](https://github.com/zhunyoung/lpod2asprin)
+
 ## License
