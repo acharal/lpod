@@ -1,0 +1,20 @@
+g1 >> -c1 >> -d1 >> -b1 >> -a1 >> c1 >> -f1 >> b1 >> a1 >> -e1 >> h1 >> e1 :- d1, not -g1.
+g1 >> b1 >> -f1 :- -c1, a1, d1, h1, -d1, e1, not f1.
+-d1 >> f1 >> -f1 >> a1 >> d1 >> -g1 >> h1 >> -e1 :- not e1, not g1, not -a1, not c1, not b1, not -b1, not -c1.
+-c1 >> b1 >> f1 >> d1 :- -b1, not -g1.
+-c1 >> -b1 >> -a1 >> -f1 >> c1 >> a1 >> h1 >> e1 :- f1, b1, d1, -g1, -e1, -d1, not g1.
+-f1 :- e1, not h1.
+e1 :- -c1, -b1, -a1, c1, f1, -f1, a1, d1, -g1, -d1, not h1.
+f1 :- g1, b1, -f1, -e1, not h1, not e1, not -a1, not c1, not -b1, not -d1.
+-d1 :- not -e1, not -a1, not d1, not -g1, not a1.
+-g1 :- not -f1, not f1, not -e1, not g1, not c1, not -b1.
+h1.
+b1 :- -a1, -f1, h1, -d1, not a1, not g1.
+d1 :- g1, -c1, -a1, c1, h1, not -f1, not -e1, not e1, not f1, not -g1, not b1, not a1, not -b1.
+h1 :- b1, -a1, -g1, not c1, not a1.
+d1 :- g1, -a1, -d1, not -f1, not f1, not e1, not -e1, not -b1.
+b1 :- -a1, not e1.
+-g1 :- g1, -b1, f1, d1, b1, a1, not h1, not -c1, not c1, not -d1.
+f1 :- -f1, -e1.
+-e1 :- b1, -g1, not e1.
+-e1 :- -c1, a1, -a1, not b1, not f1, not g1.

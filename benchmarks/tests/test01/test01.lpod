@@ -1,0 +1,5 @@
+f1 * -c1 * d1 * -a1 * -e1 * c1 * h1 * -g1 :- -f1, -d1, not b1, not e1, not g1.
+-b1 * d1 * -a1 * h1 * b1 * -g1 :- a1.
+-e1 :- c1, d1, a1, h1, -d1, g1, -g1, not -a1, not -c1, not b1, not f1, not -f1.
+a1 :- g1, f1, -c1, -b1, e1, -a1, h1, -f1, -d1, b1, not -g1, not c1, not d1, not -e1.
+e1 :- d1, -a1, -d1, c1, -g1, not -f1.
