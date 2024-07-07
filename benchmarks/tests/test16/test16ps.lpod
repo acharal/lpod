@@ -1,0 +1,42 @@
+-m1 x -a1 :- k1, -g1, w1, not -e1, not n1, not d1, not g1, not e1, not o1, not -l1, not q1, not -c1, not a1, not j1, not -b1, not c1, not b1.
+-f1 x g1 :- b1, v1, f1, t1, -m1, i1, p1, w1, not k1, not -t1.
+g1 x j1 :- -k1, b1, q1, -d1, -o1, r1, -b1, a1, u1, -n1, -t1, n1, -s1, -f1, e1, -q1, d1, w1, -a1, t1, s1.
+-u1 x -k1 :- o1, v1, -f1, s1, p1, -g1, f1, -v1, d1, not -l1, not -i1.
+-q1 x u1 :- n1, -j1, -d1, -a1, -l1, g1, -b1, -c1, i1, not k1, not -g1, not t1, not -u1, not -e1, not h1, not c1, not -n1, not -f1, not -t1, not l1, not q1, not r1, not j1, not d1, not -p1, not -i1, not -k1, not f1, not b1.
+-b1 x -c1 :- w1.
+r1 x s1 :- l1, b1, -h1, o1, -d1, c1, t1, -u1, -b1, -m1, not i1.
+t1 x u1 :- o1, -r1, -k1, -e1, -m1, b1, q1, m1, -o1, r1, -b1, a1, -n1, -s1, v1, -l1, -v1, -u1, e1, -q1, p1, k1, -a1, g1, h1, l1, not n1, not -p1, not -g1, not -f1, not -i1, not s1, not -c1, not j1, not f1.
+-p1 x -r1.
+-f1 x d1 :- b1, q1, -i1, -d1, m1, -g1, r1, -c1, j1, -n1, -t1, -j1, -l1, -v1, -u1, -q1, p1, k1, c1, t1, h1, s1, not -s1, not -h1, not n1, not -o1, not -p1, not -e1, not u1, not o1, not -r1, not -k1.
+v1 x -e1 :- b1, q1, -h1, o1, -s1, -d1, -f1, p1, c1, -v1, t1, -o1, -m1, g1, i1, -p1, d1, w1, not -q1, not h1, not u1, not -r1, not f1.
+-a1 x h1 :- not -q1, not -n1, not d1, not -o1, not i1, not t1, not l1, not v1, not q1, not j1, not -b1, not -m1.
+-s1 x -b1 :- -i1, -d1, -a1, -g1, -o1, t1, -m1, -p1, d1, not -q1, not -e1, not -h1, not p1, not -j1, not i1, not u1, not o1, not a1, not w1, not f1, not c1.
+c1 x -g1 :- o1, -k1, -m1, b1, -i1, -d1, m1, -o1, j1, i1, u1, -h1, -s1, -j1, v1, -l1, -v1, -u1, p1, d1, w1, k1, t1, h1, s1, not -q1, not -e1, not n1, not -n1, not -p1, not g1, not -f1, not -a1, not -t1, not l1, not -c1, not q1, not -r1, not a1, not e1, not -b1.
+r1 x e1 :- o1, -r1, -j1, -d1, m1, -l1, f1, g1, -b1, h1, not -q1, not -e1, not -o1, not -p1, not k1, not -f1, not u1, not l1, not v1, not a1, not -k1, not -m1.
+-e1 x a1 :- -t1, n1, -a1, -o1, -b1.
+k1 x -a1 :- b1, -i1, v1, -f1, i1, r1, -u1, -v1, a1, -p1, -n1, s1, not -o1, not p1, not g1, not -g1, not t1, not w1, not m1, not -q1, not -e1, not h1, not u1, not o1, not -r1, not -s1, not -h1, not n1, not -j1, not -d1, not -t1, not l1, not -k1, not -l1, not q1, not f1, not e1, not -m1, not d1, not j1, not -b1.
+-u1 x q1 :- v1, c1, -c1, u1, -p1, p1, not -o1, not -g1, not k1, not g1, not t1, not w1, not m1, not -e1, not h1, not a1, not -s1, not -h1, not -n1, not n1, not -j1, not -d1, not -t1, not l1, not -v1, not -l1, not f1, not r1, not e1, not -m1, not j1, not i1, not -a1, not -i1, not s1, not -k1, not -b1, not b1.
+-a1 x g1 :- -k1, -e1, f1, -m1, b1, -i1, -d1, -o1, -b1, a1, -h1, -s1, -f1, -l1, e1, -q1, -p1, p1, d1, k1, t1, h1, l1, s1, not n1, not u1, not -v1, not -t1, not w1, not c1.
+-t1 x u1 :- not -n1, not i1, not -g1, not -f1, not t1, not h1, not o1, not s1, not j1, not w1, not e1, not -b1, not -m1, not b1.
+-k1 x -b1 :- v1, -d1, -o1, -u1, e1, w1.
+t1 x g1 :- m1, d1, a1, -i1, not -s1, not -m1, not p1.
+-m1 x -j1 :- -t1, b1, -h1, -e1, -k1, c1, f1, -v1, r1, e1, h1, g1, u1, j1, i1, d1, not -q1, not -s1, not n1, not -o1, not -p1, not -a1, not -u1, not s1, not -l1, not v1, not w1, not m1, not -b1.
+d1 x -b1 :- k1, n1, o1, -g1, -o1, r1, h1, a1, j1, l1.
+-u1 x -n1 :- not -o1, not -g1, not m1, not -q1, not -e1, not -c1, not a1, not -j1, not -d1, not -v1, not -t1, not l1, not -l1, not -m1, not j1, not -p1, not i1, not -a1, not s1, not -k1, not f1, not b1.
+b1 x w1 :- not v1.
+k1 :- l1, f1, not -j1, not u1, not o1, not -l1, not -r1, not w1, not e1.
+-o1 :- k1, o1, -k1, -r1, h1, not p1, not t1, not -u1, not w1, not -e1, not u1, not -c1, not a1, not c1, not -s1, not -h1, not -n1, not n1, not -j1, not -f1, not -v1, not l1, not -l1, not e1, not d1, not -p1, not s1, not j1, not b1.
+-u1 :- b1, f1, j1, -m1, p1, w1, not n1, not -r1.
+j1 :- k1, -t1, o1, -k1, -j1, -a1, m1, -l1, f1, r1, -o1, -u1, a1, h1, u1, -n1, not -s1, not -h1, not -g1, not q1, not e1.
+-n1 :- -o1, k1, -j1, not a1.
+-m1 :- -i1, not -o1, not k1, not -g1, not g1, not -q1, not u1, not a1, not c1, not -h1, not -f1, not -d1, not -t1, not q1, not r1, not e1, not -b1, not -p1, not -a1, not f1.
+a1 :- w1, not p1, not g1, not t1, not -u1, not m1, not -q1, not -e1, not h1, not u1, not -c1, not c1, not -s1, not -h1, not n1, not -n1, not -j1, not -d1, not -t1, not -v1, not -l1, not -m1, not j1, not d1, not -p1, not -k1, not -b1.
+n1 :- o1, -o1, a1, j1, -p1.
+b1 :- o1, -e1, -k1, -r1, -m1, q1, -i1, -g1, -o1, r1, a1, j1, -c1, u1, i1, -t1, -h1, -s1, -j1, -l1, -v1, -u1, e1, p1, d1, w1, k1, -a1, h1, s1, not -f1, not -b1, not l1.
+k1 :- o1, -s1, -r1, -i1, -g1, -o1, t1, -p1, s1, not n1, not i1, not p1, not g1, not -d1, not u1, not -v1, not l1, not q1, not -m1.
+n1 :- -t1, -s1, -j1, -k1, -d1, m1, c1, -v1, -m1, -n1, not -o1, not p1, not k1, not -g1, not g1, not t1, not -u1, not w1, not -q1, not h1, not u1, not o1, not v1, not -c1, not a1, not -f1, not l1, not -l1, not f1, not r1, not d1, not -i1, not j1, not -b1.
+j1 :- -r1, -e1, -m1, -i1, -g1, -o1, -b1, -c1, i1, -n1, -s1, -j1, -v1, e1, -q1, -p1, d1, w1, k1, -a1, t1, l1, not g1, not -h1, not a1, not b1.
+-r1 :- -b1, not -e1, not n1, not i1, not t1, not -i1, not -t1, not o1, not v1, not -m1.
+-m1 :- n1, -s1, -i1, -g1, f1, -u1, -b1, h1, l1, -n1, d1, not m1, not -p1, not i1, not g1, not -d1, not -f1, not -a1, not t1, not o1, not s1, not v1, not -r1, not r1, not c1, not b1.
+
+#option --true-negation --priorities.
