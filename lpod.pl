@@ -6,7 +6,7 @@
 :- op(100, fx, #).
 :- op(100, fx, ~).
 :- op(200, fy, @).
-:- op(200, fy, not).
+:- op(210, fy, not).
 :- op(1110, xfy, *).
 :- op(1100, xfx, const).
 :- op(1100, xfx, show).
@@ -38,6 +38,7 @@ normalize_rules([R|Rs], NormalizedRules) :-
 	append(NR, NRs, NormalizedRules).
 
 normalize_rule((:- Body),    [(:- Body)]) :- !.
+normalize_rule((H :- B), [(H :- B)]) :- lit(H), !.
 normalize_rule(Rule, [Rule1 | Aux ]) :-
 	gensym('r', R), 
 	head(Rule, Head),
