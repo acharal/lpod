@@ -6,7 +6,7 @@
 :- op(100, fx, #).
 :- op(100, fx, ~).
 :- op(200, fy, @).
-:- op(210, fy, not).
+:- op(200, fy, not).
 :- op(1110, xfy, *).
 :- op(1100, xfx, const).
 :- op(1100, xfx, show).
@@ -125,10 +125,10 @@ gen_fstars_options(_, [], _, []).
 gen_fstars_options(Body, [O|Os], Prev, Rs) :-
 	fstarsym(FStarSym),
 	FStarSymO    =.. [ FStarSym, O ],
-	append([(not O) | Body], Prev, Body1),
-	rule(FStarSymO, Body1, R0), 
-	gen_fstars_options2(FStarSymO, O, Prev, Body, R1),
-	append([R0], R1, Rs0),
+	% append([(not O) | Body], Prev, Body1),
+	% rule(FStarSymO, Body1, R0), 
+	gen_fstars_options2(FStarSymO, O, Prev, Body, Rs0),
+	% append([R0], R1, Rs0),
 	gen_fstars_options(Body, Os, [FStarSymO | Prev], Rs1),
 	append(Rs0, Rs1, Rs).
 
@@ -144,7 +144,7 @@ gen_fstars_options(Body, [O|Os], Prev, Rs) :-
 % so it is outsourced in the following predicate.
 gen_fstars_options2(_FStarSymO, _O, _Prev, [], []) :- !.
 gen_fstars_options2(FStarSymO, O, Prev, [Body], [R1]) :-
-	fstarsym(FStarSym),
+	fstar_or_true_sym(FStarSym),
 	FStarSymBody =.. [ FStarSym, Body ],
 	append([(not O), FStarSymBody], Prev, Body2),
 	rule(FStarSymO, Body2, R1).
@@ -155,7 +155,7 @@ gen_fstars_body(BodySymbol, RealBody, Rs) :-
 	body_to_posneg(BodyList, PosList, NegList),
 	fstar_or_true_sym(FStarTrueSym),
 	mapop(FStarTrueSym, PosList, ForTList),
-	gen_fstars_or_trues(PosList,PosListRules),
+	gen_fstars_or_trues([BodySymbol|PosList],PosListRules),
 	append(ForTList, NegList, L),
 	fstarsym(FStarSym),
 	FStarBodySymbol =.. [ FStarSym, BodySymbol ],
