@@ -1,68 +1,93 @@
 import random
 import sys
 
-def generate_atoms(num_atoms):
-    atoms = []
-    for _ in range(num_atoms):
-        letter = random.choice('abcdefghijklmnopqrstuvwxyz')
-        # number = random.randint(1, 9)
-        # atom = letter + str(number)
-        # atoms.append(atom)
-        atoms.append(letter)
-    return atoms
+max_atoms: int
+num_rules: int
+atom_set: list
 
-def concat_sep(items, separator):
-    return separator.join(items)
+def generate_atom_set(max_atoms):
+    global atom_set
+    atom_set = []
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    idx = 1
+    while len(atom_set) < max_atoms:
+        for letter in alphabet:
+            atom_set.append(f'{letter}{idx}')
+            if len(atom_set) >= max_atoms:
+                break
+            atom_set.append(f'-{letter}{idx}')
+        idx += 1
 
-def generate_random_lpods(num_rules, atoms, maxn):
-    lpods = []
-    num_atoms = len(atoms)
-    atoms_per_part = num_atoms // 3
+def generate_literal(pos: bool, atom_set: set):
+    atom = random.choice(atom_set)
+    atom_set.remove(atom)
+    return atom_set, atom if pos else 'not ' + atom  # make it a negative literal if specified
+
+def generate_rule(min_n, max_n, max_atoms):
+    rule = ':('
+    global atom_set
+    rule_atoms = atom_set.copy()
+    n = random.randint(min_n, max_n)
     
-    for _ in range(num_rules):
-        random.shuffle(atoms)
-        headatoms = atoms[:maxn]
-        bodyatoms = atoms
-        notbodyatoms = atoms
-        
-        head_atoms = random.sample(headatoms, random.randint(1, max(2, maxn)))
-        body_atoms = random.sample(bodyatoms, random.randint(0, atoms_per_part))
-        not_body_atoms = random.sample(notbodyatoms, random.randint(0, atoms_per_part))
-
-
-        head = concat_sep(head_atoms, ' * ')
-        body = concat_sep(body_atoms, ', ')
-        not_body = concat_sep(not_body_atoms, ', not ')
-        
-        rule = ''
-
-        if body:
-            rule += head + ' :- ' + body
-        if not_body:
-            rule += ', not ' + not_body
-        if not (body and not_body):
-            rule = head
-        
-        rule += '.'
-        
-        lpods.append(rule)
+    head_atoms = set()
+    while len(head_atoms) < n:
+        rule_atoms, atom = generate_literal(True, rule_atoms)
+        head_atoms.add(atom)
     
-    return lpods
+    tot_body_atoms = random.randint(0, max_atoms - n)
 
-if __name__ == "__main__":
+    tot_pos = random.randint(0, tot_body_atoms)
+    pos_body_atoms = set()
+    while len(pos_body_atoms) < tot_pos:
+        rule_atoms, atom = generate_literal(True, rule_atoms)
+        if atom not in head_atoms:  # ensure not in head
+            pos_body_atoms.add(atom)
+    
+    tot_neg = tot_body_atoms - tot_pos
+    neg_body_atoms = set()
+    while len(neg_body_atoms) < tot_neg:
+        rule_atoms, atom = generate_literal(False, rule_atoms)
+        if atom not in head_atoms and atom not in pos_body_atoms:  # ensure not in head or positive pos_body
+            neg_body_atoms.add(atom)
+    
+    head = ' * '.join(head_atoms)
+    if tot_body_atoms > 0:
+        pos_body = ', '.join(pos_body_atoms)
+        neg_body = ', '.join(neg_body_atoms)
+        if pos_body and neg_body:
+            rule = f'{head} :- {pos_body}, {neg_body}.'
+        elif pos_body:
+            rule = f'{head} :- {pos_body}.'
+        elif neg_body:
+            rule = f'{head} :- {neg_body}.'
+    else:
+        rule = f'{head}.'
+    
+    return rule
+
+def main():
     if len(sys.argv) != 4:
-        print("Usage: python script_name.py num_rules num_atoms maxn")
+        print("Usage: python generator.py <number of rules> <max atoms> <max n>")
         sys.exit(1)
 
-    try:
-        num_rules = int(sys.argv[1])
-        num_atoms = int(sys.argv[2])
-        maxn = int(sys.argv[3])
-    except ValueError:
-        print("Error: Both num_rules and num_atoms must be integers")
-        sys.exit(1)
+    global max_atoms
+    global atom_set
+    global num_rules
 
-    atoms = generate_atoms(num_atoms)
-    random_lpods = generate_random_lpods(num_rules, atoms,maxn)
-    for lpod in random_lpods:
-        print(lpod)
+    num_rules = int(sys.argv[1])
+    max_atoms = int(sys.argv[2])
+    max_n = int(sys.argv[3])
+
+    generate_atom_set(max_atoms)
+
+    m = random.randint(1, int(0.75*num_rules) + 1)
+    for _ in range(m):  # generate m o.d. rules
+        rule = generate_rule(2, max_n, max_atoms)
+        print(rule)
+
+    for _ in range(num_rules - m):  # generate regular rules
+        rule = generate_rule(1, 1, max_atoms)
+        print(rule)
+
+if __name__ == '__main__':
+    main()
