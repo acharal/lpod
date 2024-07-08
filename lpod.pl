@@ -142,7 +142,9 @@ gen_fstars_options(Body, [O|Os], Prev, Rs) :-
 %   Rs0 = [R0,R1]),
 %
 % so it is outsourced in the following predicate.
-gen_fstars_options2(_FStarSymO, _O, _Prev, [], []) :- !.
+gen_fstars_options2(FStarSymO, O, Prev, [], [R0]) :- 
+	append([(not O)], Prev, Body1),
+	rule(FStarSymO, Body1, R0), !.
 gen_fstars_options2(FStarSymO, O, Prev, [Body], [R1]) :-
 	fstar_or_true_sym(FStarSym),
 	FStarSymBody =.. [ FStarSym, Body ],
