@@ -145,11 +145,12 @@ gen_fstars_options(Body, [O|Os], Prev, Rs) :-
 gen_fstars_options2(FStarSymO, O, Prev, [], [R0]) :- 
 	append([(not O)], Prev, Body1),
 	rule(FStarSymO, Body1, R0), !.
-gen_fstars_options2(FStarSymO, O, Prev, [Body], [R1]) :-
+gen_fstars_options2(FStarSymO, O, Prev, [Body], [R1|Rs1]) :-
 	fstar_or_true_sym(FStarSym),
 	FStarSymBody =.. [ FStarSym, Body ],
 	append([(not O), FStarSymBody], Prev, Body2),
-	rule(FStarSymO, Body2, R1).
+	rule(FStarSymO, Body2, R1),
+	gen_fstars_or_trues([Body],Rs1).
 
 % if ReadBody is the BodySymbol is this rule redundant?
 gen_fstars_body(BodySymbol, RealBody, Rs) :-
@@ -157,7 +158,7 @@ gen_fstars_body(BodySymbol, RealBody, Rs) :-
 	body_to_posneg(BodyList, PosList, NegList),
 	fstar_or_true_sym(FStarTrueSym),
 	mapop(FStarTrueSym, PosList, ForTList),
-	gen_fstars_or_trues([BodySymbol|PosList],PosListRules),
+	gen_fstars_or_trues(PosList,PosListRules),
 	append(ForTList, NegList, L),
 	fstarsym(FStarSym),
 	FStarBodySymbol =.. [ FStarSym, BodySymbol ],
@@ -170,7 +171,7 @@ gen_fstars_or_trues([L|Ls],Rs) :-
 	FStarL =.. [ FStarSym, L ],
 	fstar_or_true_sym(FStarTrueSym),
 	FStarTrueSymL =.. [ FStarTrueSym, L ],
-	Rs0 = [ FStarTrueSymL :- (FStarL ; L) ],
+	Rs0 = [ (FStarTrueSymL :- FStarL),  (FStarTrueSymL :- L) ],
 	gen_fstars_or_trues(Ls,Rs1),
 	append(Rs0, Rs1, Rs).
 
