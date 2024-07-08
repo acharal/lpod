@@ -1,9 +1,9 @@
 import random
 import sys
 
-max_atoms: int
-num_rules: int
-atom_set: list
+max_atoms = 0
+num_rules = 0
+atom_set = []
 
 def generate_atom_set(max_atoms):
     global atom_set
@@ -12,13 +12,13 @@ def generate_atom_set(max_atoms):
     idx = 1
     while len(atom_set) < max_atoms:
         for letter in alphabet:
-            atom_set.append(f'{letter}{idx}')
+            atom_set.append('{}{}'.format(letter,idx))
             if len(atom_set) >= max_atoms:
                 break
-            atom_set.append(f'-{letter}{idx}')
+            atom_set.append('-{}{}'.format(letter,idx))
         idx += 1
 
-def generate_literal(pos: bool, atom_set: set):
+def generate_literal(pos, atom_set):
     atom = random.choice(atom_set)
     atom_set.remove(atom)
     return atom_set, atom if pos else 'not ' + atom  # make it a negative literal if specified
@@ -26,7 +26,7 @@ def generate_literal(pos: bool, atom_set: set):
 def generate_rule(min_n, max_n, max_atoms):
     rule = ':('
     global atom_set
-    rule_atoms = atom_set.copy()
+    rule_atoms = list(atom_set)
     n = random.randint(min_n, max_n)
     
     head_atoms = set()
@@ -47,7 +47,7 @@ def generate_rule(min_n, max_n, max_atoms):
     neg_body_atoms = set()
     while len(neg_body_atoms) < tot_neg:
         rule_atoms, atom = generate_literal(False, rule_atoms)
-        if atom not in head_atoms and atom not in pos_body_atoms:  # ensure not in head or positive pos_body
+        if atom not in head_atoms and atom not in pos_body_atoms:  # ensure not in head or positve part of body
             neg_body_atoms.add(atom)
     
     head = ' * '.join(head_atoms)
@@ -55,13 +55,13 @@ def generate_rule(min_n, max_n, max_atoms):
         pos_body = ', '.join(pos_body_atoms)
         neg_body = ', '.join(neg_body_atoms)
         if pos_body and neg_body:
-            rule = f'{head} :- {pos_body}, {neg_body}.'
+            rule = '{} :- {}, {}.'.format(head,pos_body,neg_body)
         elif pos_body:
-            rule = f'{head} :- {pos_body}.'
+            rule = '{} :- {}.'.format(head,pos_body)
         elif neg_body:
-            rule = f'{head} :- {neg_body}.'
+            rule = '{} :- {}.'.format(head,neg_body)
     else:
-        rule = f'{head}.'
+        rule = '{}.'.format(head)
     
     return rule
 
