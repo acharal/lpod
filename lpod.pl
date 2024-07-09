@@ -2,6 +2,7 @@
 
 
 :- use_module(library(readutil)).
+:- use_module(library(ugraphs)).
 :- op(100, xfx, {}).
 :- op(100, fx, #).
 :- op(100, fx, ~).
@@ -93,35 +94,62 @@ translate_options(Body, [O|Os], Prev, Rs) :-
 	translate_options(Body, Os, [(not O)|Prev], RestR),
 	append([R], RestR, Rs).
 
-gen_fstar_rules([], []).
-gen_fstar_rules([R|Rs], FRR) :-
+%
+% Give a list of rules creates the corresponding a set of fstar (and fstar_or_true) rules
+%
+gen_fstar_rules(R, FR) :-
+	build_hasF_clauses(R),
+	gen_fstar_rules1(R,FR),
+	destroy_hasF.
+
+gen_fstar_rules1([], []).
+gen_fstar_rules1([R|Rs], FRR) :-
 	gen_fstar_rule(R, FR),
 	gen_fstar_rules(Rs,FRs),
 	append(FR, FRs, FRR).
 
+%
+% Rule is a ordered disjunction
+% C1 * ... * Cn :- Body
+%
 gen_fstar_rule(Rule, FstarRules) :- odisj_rule(Rule), !,
 	head(Rule, Head),
 	body(Rule, Body),
 	bin_to_list('*', Head, Options),
 	gen_fstars_options(Body, Options, [], FstarRules).
 
+%
+% Rule is a disjunction
+% C1 ; ...; Cn :- Body.
+%
 gen_fstar_rule((Head:-Body), FstarRules) :- disj(Head), !,
 	gen_fstars_head(Body, Head, FstarRules).
 
-gen_fstar_rule((Head:-Body), FstarRules) :- !,
-	gen_fstars_body(Head, Body, FstarRules).
+%
+% Rule is a regular rule
+% H :- A1, ..., Am, not Am+1, ..., Ak
+%
+gen_fstar_rule((Head:-Body), FstarRules) :- 
+	(hasF(Head) ->  gen_fstars_body(Head, Body, FstarRules) ; true).
 
+%
+% Rule is a fact
+%
 gen_fstar_rule(Rule, []) :- fact(Rule), !.
 
+%
+% Translates a given option inside a ordered disjunctive rule
+% Body is the body of the rule. Since the rule is normalized this is either [] or [BodySymbol]
+% O = [O1, ..., On] is a list of options
+% Prev is a list of options that precede. If O1, O2, O3 are the options then Prev contains _isF(01), _isF(O2), ...
+% Rs is a list of rules
+%
+% 	_isF(O1) :- _isFT(Body), Prev
+%   _isF(O2) :- _isFT(Body), _isF(O1), Prev
+%    ...
+%   _isF(On) :- _isFT(Body), _isF(O1), _isF(O2), _isF(On-1), Prev
+%
 gen_fstars_options(_, [], _, []).
-%gen_fstars_options([], [O|Os], Prev, Rs) :- !,
-%	fstarsym(FStarSym),
-%	FStarSymO    =.. [ FStarSym, O ],
-%	append([(not O)], Prev, Body1),
-%	rule(FStarSymO, Body1, R0),
-%	gen_fstars_options([], Os, [FStarSymO | Prev], Rs1),
-%	append([R0], Rs1, Rs).
-
 gen_fstars_options(Body, [O|Os], Prev, Rs) :-
 	fstarsym(FStarSym),
 	FStarSymO    =.. [ FStarSym, O ],
@@ -133,38 +161,49 @@ gen_fstars_options(Body, [O|Os], Prev, Rs) :-
 	append(Rs0, Rs1, Rs).
 
 
-% the following inline code is not working for some reason
+% Prev is the _isF list of previous options 
+% Prev = _isF(C1), _isF()
 %
-% (Body = [], Rs0 = [R0]
-% ; FStarSymBody =.. [ FStarSym, Body ],
-%   append([(not O) | FStarSymBody], Prev, Body2),
-%   rule(FStarSymO, Body2, R1),
-%   Rs0 = [R0,R1]),
+% _isF(0) :- not 0, _isForT(Body), Prev.
 %
-% so it is outsourced in the following predicate.
 gen_fstars_options2(FStarSymO, O, Prev, [], [R0]) :- 
 	append([(not O)], Prev, Body1),
 	rule(FStarSymO, Body1, R0), !.
-gen_fstars_options2(FStarSymO, O, Prev, [Body], [R1|Rs1]) :-
+gen_fstars_options2(FStarSymO, O, Prev, [Body], [R1]) :-
 	fstar_or_true_sym(FStarSym),
-	FStarSymBody =.. [ FStarSym, Body ],
+	(hasF(Body) -> FStarSymBody =.. [ FStarSym, Body ] ; FStarSymBody = Body),
+	% FStarSymBody =.. [ FStarSym, Body ],
 	append([(not O), FStarSymBody], Prev, Body2),
-	rule(FStarSymO, Body2, R1),
-	gen_fstars_or_trues([Body],Rs1).
+	rule(FStarSymO, Body2, R1).
+	% gen_fstars_or_trues([Body],Rs1).
+
 
 % if ReadBody is the BodySymbol is this rule redundant?
-gen_fstars_body(BodySymbol, RealBody, Rs) :-
+gen_fstars_body(BodySymbol, RealBody, [R]) :-
 	bin_to_list(',', RealBody, BodyList),
 	body_to_posneg(BodyList, PosList, NegList),
 	fstar_or_true_sym(FStarTrueSym),
 	mapop(FStarTrueSym, PosList, ForTList),
-	gen_fstars_or_trues(PosList,PosListRules),
+	% gen_fstars_or_trues(PosList,PosListRules),
 	append(ForTList, NegList, L),
 	fstarsym(FStarSym),
 	FStarBodySymbol =.. [ FStarSym, BodySymbol ],
-	rule(FStarBodySymbol, [(not BodySymbol)| L], R),
-	append([R], PosListRules, Rs).
+	rule(FStarBodySymbol, [(not BodySymbol)| L], R).
+	% append([R], PosListRules, Rs).
 
+gen_fstars_head(HeadSymbol, RealHead, Rs) :-
+	bin_to_list(';', RealHead, HeadList),
+	fstarsym(FStarSym),
+	FStarHeadSymbol =.. [ FStarSym, HeadSymbol ],
+	mapop(FStarSym, HeadList, IsFList),
+	binop(';', IsFList, IsFHead),
+	Rs = [(IsFHead :- FStarHeadSymbol)].
+
+%
+% Given a list of atoms creates the rules
+%  _isForT(A) :- A
+%  _isForT(A) :- _isF(A)
+%
 gen_fstars_or_trues([],[]).
 gen_fstars_or_trues([L|Ls],Rs) :-
 	fstarsym(FStarSym),
@@ -175,13 +214,41 @@ gen_fstars_or_trues([L|Ls],Rs) :-
 	gen_fstars_or_trues(Ls,Rs1),
 	append(Rs0, Rs1, Rs).
 
-gen_fstars_head(HeadSymbol, RealHead, Rs) :-
-	bin_to_list(';', RealHead, HeadList),
-	fstarsym(FStarSym),
-	FStarHeadSymbol =.. [ FStarSym, HeadSymbol ],
-	mapop(FStarSym, HeadList, IsFList),
-	binop(';', IsFList, IsFHead),
-	Rs = [(IsFHead :- FStarHeadSymbol)].
+
+%  hasF(A): true if A is in a head of an ordered disjunction
+%  hasF(A): if it is in a head of a rule where some of the positive atoms B, hasF(B).
+%
+%  hasTF(A) if it hasF(A).
+% if it does not hasTF(A) then we can substitute with A whenever we need hasTF(A).
+
+:- dynamic hasF/1.
+:- table hasF/1.
+
+add_hasF(F) :- add_hasF(F,F).
+add_hasF(F, R) :-  (call(F) -> true ;  assertz(R)).
+
+build_hasF_clauses([]).
+
+build_hasF_clauses([Rule|Rules]) :- 
+	odisj_rule(Rule), !,
+	head(Rule, Head),
+	bin_to_list('*', Head, Options), !,
+	((member(O, Options),
+	add_hasF(hasF(O)), 
+	fail) ; true),
+	build_hasF_clauses(Rules).
+
+build_hasF_clauses([Rule|Rules]) :- 
+	head(Rule, Head),
+	lit(Head), !,
+	body(Rule, BodyList),
+	body_to_posneg(BodyList, Pos, _Neg),
+	(member(O, Pos), 
+	 add_hasF(hasF(Head), (hasF(Head) :- hasF(O))), 
+	 fail ; true),
+	build_hasF_clauses(Rules).
+
+destroy_hasF :- retractall(hasF(_)).
 
 % auxiliary predicates 
 
