@@ -1,23 +1,22 @@
 # LPOD solver
 
-A solver for Logic Programs with Ordered Disjunction (LPODs) written in SWI-Prolog. It translates LPODs into Answer Set Programming (ASP) and utilizes the `asprin` and `clingo` to find preferred solutions.
+A solver for Logic Programs with Ordered Disjunction (LPODs) written in SWI-Prolog. It translates LPODs into Answer Set Programming (ASP) and utilizes `asprin` and `clingo` to find preferred solutions.
 
 ## Installation
 
 To use LPOD solver you need to have:
 
 1. SWI-Prolog 
-2. `asprin` and `clingo`
+2. [`asprin`](https://github.com/potassco/asprin) and `clingo`
 
-
-The easiest way to 
+We have tested the solver with `Python 3.5.3`, `SWI-Prolog 9.1.21`, `asprin 3.1.1` and `clingo 5.4.0`
 
 ## Usage
-
-```bash
-swipl ./lpod.pl ./example.lpod > ./example.lp
-asprin ./example.lp ./pref.lp
+Make sure `lpodsolver.sh` has execute permissions, then:
 ```
+./lpodsolver.sh example.lpod
+```
+
 
 ## LPOD Syntax
 
@@ -48,5 +47,3 @@ In this example, `p` is preferred over `q` when `r` is true.
 1. [psmodels](http://www.tcs.hut.fi/Software/smodels/priority/)
 2. [lpod.pl](https://www.dc.fi.udc.es/~cabalar/lpod/)
 3. [lpod2asprin](https://github.com/zhunyoung/lpod2asprin)
-
-## License
